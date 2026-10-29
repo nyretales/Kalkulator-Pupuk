@@ -1,386 +1,386 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulator Pupuk - BPP Salomekko</title>
-    <style>
-        :root {
-            --primary: #10b981;
-            --primary-dark: #059669;
-            --accent: #f59e0b;
-            --danger: #ef4444;
-            --bg: #f3f4f6;
-            --card-bg: #ffffff;
-            --text: #1f2937;
-            --wa-color: #25D366;
-            --wa-dark: #128C7E;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14432a">
+<title>Kalkulator Pupuk - BPP Salomekko</title>
+<style>
+:root{
+  --ink:#10281a; --muted:#5d6f63; --line:#dbe5d6; --bg:#edf3e9; --card:#fff;
+  --green:#14432a; --green2:#1f6b3f; --gabah:#f2b705; --gabah-ink:#3a2a00;
+  --n:#2563eb; --p:#d98a00; --k:#d6372c; --wa:#1fa855;
+  --soft:#f4f8f1;
+}
+@media (prefers-color-scheme:dark){
+  :root{--ink:#e8f1e6; --muted:#9bb0a0; --line:#2b4233; --bg:#0d1a12; --card:#14261b; --soft:#1a3023; --green:#0f3320; --green2:#4fbf7d;}
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{background:var(--bg)}
+body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);background:var(--bg);
+  min-height:100vh;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px));font-size:16px;line-height:1.45}
+button,input,select{font:inherit;color:inherit}
+.wrap{max-width:560px;margin:0 auto;padding:0 16px}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+/* Header */
+header{background:var(--green);color:#fff;padding:calc(14px + env(safe-area-inset-top,0px)) 0 54px}
+.bar{display:flex;align-items:center;gap:12px}
+.bar img{width:44px;height:44px;object-fit:contain;background:#fff;border-radius:10px;padding:4px}
+.bar .who{flex:1;min-width:0;font-size:.78rem;opacity:.85;line-height:1.25}
+.bar .who b{display:block;font-size:.95rem;opacity:1}
+.wa-top{width:44px;height:44px;border-radius:50%;background:var(--wa);display:grid;place-items:center;flex:none}
+.wa-top svg{width:24px;height:24px;fill:#fff}
+h1{font-size:1.65rem;line-height:1.15;margin-top:18px;font-weight:800;letter-spacing:-.01em}
+header p{opacity:.85;margin-top:4px;font-size:.92rem}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 20px;
-        }
+main{margin-top:-34px}
+.card{background:var(--card);border-radius:20px;padding:18px;margin-bottom:14px;box-shadow:0 1px 0 var(--line),0 8px 24px -12px rgba(16,40,26,.25)}
+.card h2{font-size:1.02rem;font-weight:800;margin-bottom:12px}
+.hint{font-size:.82rem;color:var(--muted);margin-top:10px}
+section[hidden]{display:none}
 
-        /* --- HEADER TERPUSAT --- */
-        .agency-header-center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid var(--primary-dark);
-            width: 100%;
-            max-width: 900px;
-        }
+/* Komoditas */
+.chips{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.chip{border:2px solid var(--line);background:var(--soft);border-radius:14px;padding:10px 2px;text-align:center;cursor:pointer;font-weight:700;font-size:.8rem;display:flex;flex-direction:column;gap:2px;align-items:center}
+.chip span{font-size:1.6rem;line-height:1.1}
+.chip[aria-pressed=true]{border-color:var(--green2);background:var(--green);color:#fff}
 
-        .logo-kementan-center {
-            height: 90px;
-            width: auto;
-            margin-bottom: 12px;
-        }
+/* Luas */
+.row{display:flex;gap:10px;align-items:stretch}
+.big{flex:1;min-width:0;height:58px;border:2px solid var(--line);background:var(--soft);border-radius:14px;padding:0 14px;font-size:1.5rem;font-weight:800;width:100%}
+.big:focus,.num:focus,.date:focus,.price:focus{outline:3px solid var(--gabah);outline-offset:0;border-color:var(--gabah)}
+.seg{display:flex;border:2px solid var(--line);border-radius:14px;overflow:hidden;flex:none}
+.seg button{border:0;background:var(--soft);padding:0 14px;font-weight:700;cursor:pointer}
+.seg button[aria-pressed=true]{background:var(--green);color:#fff}
 
-        .ministry-subtext {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #4b5563;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 5px;
-        }
+/* Hasil pupuk */
+.total{background:var(--green);color:#fff;border-radius:18px;padding:16px 18px;margin-bottom:12px}
+.total small{opacity:.8;font-size:.82rem}
+.total strong{display:block;font-size:2.2rem;font-weight:800;line-height:1.1}
+.fert{border-top:1px solid var(--line);padding:14px 0}
+.fert:first-of-type{border-top:0;padding-top:0}
+.fhead{display:flex;align-items:center;gap:10px}
+.dot{width:12px;height:42px;border-radius:6px;flex:none}
+.fname{flex:1;min-width:0}
+.fname b{display:block}
+.fname small{color:var(--muted);font-size:.8rem}
+.fkg{text-align:right}
+.fkg b{font-size:1.4rem;font-weight:800;display:block;line-height:1.1}
+.fkg small{color:var(--muted);font-size:.78rem}
+.fprice{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.85rem;color:var(--muted)}
+.price{width:110px;height:38px;border:2px solid var(--line);background:var(--soft);border-radius:10px;padding:0 10px;text-align:right;font-weight:700}
+.fprice output{margin-left:auto;font-weight:800;color:var(--ink)}
+.cost{display:flex;justify-content:space-between;align-items:center;margin-top:6px;padding:12px 14px;border-radius:14px;background:var(--gabah);color:var(--gabah-ink);font-weight:800}
+.cost span:last-child{font-size:1.25rem}
 
-        .agency-title-main {
-            font-size: 1.8rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            color: var(--primary-dark);
-            letter-spacing: 1px;
-            line-height: 1.2;
-        }
+/* Jadwal */
+.date{width:100%;height:54px;border:2px solid var(--line);background:var(--soft);border-radius:14px;padding:0 14px;font-weight:700}
+.step{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--line)}
+.step:first-of-type{border-top:0}
+.when{flex:none;width:62px;text-align:center;border-radius:14px;background:var(--soft);padding:8px 2px}
+.when b{display:block;font-size:1.25rem;line-height:1.1}
+.when small{font-size:.72rem;color:var(--muted)}
+.step.next .when{background:var(--gabah);color:var(--gabah-ink)}
+.step.next .when small{color:var(--gabah-ink)}
+.step.late .when{background:#fde2df;color:#8a1c14}
+.step.done{opacity:.55}
+.sbody{flex:1;min-width:0}
+.sbody b{display:block}
+.sbody .tgl{font-size:.82rem;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.tag{font-size:.82rem;font-weight:700;padding:4px 10px;border-radius:99px;background:var(--soft);border:1px solid var(--line)}
+.chk{display:flex;align-items:center;gap:8px;font-size:.88rem;font-weight:600;cursor:pointer}
+.chk input{width:22px;height:22px;accent-color:var(--green2)}
 
-        @media (max-width: 640px) {
-            .logo-kementan-center { height: 75px; }
-            .ministry-subtext { font-size: 0.8rem; }
-            .agency-title-main { font-size: 1.4rem; }
-        }
+/* Campuran */
+.mix{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
+.mix:first-of-type{border-top:0}
+.mix .fname{flex:1}
+.step-in{display:flex;align-items:center;flex:none}
+.step-in button{width:44px;height:48px;border:2px solid var(--line);background:var(--soft);font-size:1.4rem;font-weight:800;cursor:pointer}
+.step-in button:first-child{border-radius:12px 0 0 12px;border-right:0}
+.step-in button:last-child{border-radius:0 12px 12px 0;border-left:0}
+.num{width:64px;height:48px;border:2px solid var(--line);background:var(--card);text-align:center;font-size:1.15rem;font-weight:800;border-radius:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat{border-radius:14px;padding:10px 4px;text-align:center;background:var(--soft);border-bottom:4px solid}
+.stat b{display:block;font-size:1.3rem;font-weight:800}
+.stat small{font-size:.75rem;color:var(--muted)}
+.vbar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--line);margin-bottom:8px}
+.vbar i{display:block;height:100%;transition:width .4s}
+.verdict{border-radius:16px;padding:14px;margin-bottom:12px;background:var(--soft)}
+.verdict.veg{background:#dcf3e2;color:#0d4a24}
+.verdict.gen{background:#fff0c4;color:#5c4100}
+.verdict.bal{background:#dcebfb;color:#0f3f6e}
+.verdict b{display:block;font-size:1.05rem}
+.verdict small{display:block;font-weight:700;opacity:.8;margin-bottom:2px}
+.verdict p{font-size:.9rem;margin-top:4px}
 
-        /* --- CONTAINER UTAMA --- */
-        .container {
-            width: 100%;
-            max-width: 900px;
-            background: var(--card-bg);
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            overflow: hidden;
-            margin-bottom: 40px;
-            display: flex;
-            flex-direction: column;
-        }
+/* Tombol */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:54px;border:0;border-radius:16px;font-weight:800;cursor:pointer;text-decoration:none;padding:10px 16px;text-align:center}
+.btn.wa{background:var(--wa);color:#fff;margin-top:12px}
+.btn.wa svg{width:24px;height:24px;fill:#fff;flex:none}
+.btn.ghost{background:transparent;border:2px solid var(--line);color:var(--muted);min-height:46px;margin-top:10px}
+.empty{text-align:center;color:var(--muted);padding:10px 0}
+.empty span{font-size:2rem;display:block}
 
-        .tool-header {
-            background: var(--primary-dark);
-            padding: 20px;
-            text-align: center;
-            color: white;
-        }
-        .tool-header h2 { font-size: 1.3rem; margin-bottom: 5px; font-weight: 600; }
-        .tool-header p { opacity: 0.9; font-size: 0.9rem; }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0;
-        }
-
-        @media (max-width: 768px) {
-            .grid-layout { grid-template-columns: 1fr; }
-        }
-
-        /* Input Section */
-        .input-section { padding: 25px; background: #fff; }
-        .section-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 15px; }
-
-        .input-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            border-bottom: 1px solid #f3f4f6;
-        }
-        
-        .input-label strong { display: block; font-size: 0.95rem; }
-        .input-label small { color: #6b7280; font-size: 0.8rem; }
-
-        input[type="number"] {
-            width: 80px;
-            padding: 8px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            text-align: center;
-            font-size: 1rem;
-        }
-        input[type="number"]:focus { outline: 2px solid var(--primary); }
-
-        /* Result Section */
-        .result-section {
-            background: #f9fafb;
-            padding: 25px;
-            border-left: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .analysis-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border: 1px solid #e5e7eb;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            background: #e5e7eb;
-            color: #374151;
-        }
-
-        .analysis-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 5px; color: #111; }
-        .analysis-desc { font-size: 0.9rem; color: #4b5563; line-height: 1.5; }
-
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .stat-box { background: white; padding: 10px; border-radius: 8px; text-align: center; border: 1px solid #e5e7eb; }
-        .stat-val { display: block; font-size: 1.1rem; font-weight: bold; }
-        .stat-label { font-size: 0.75rem; color: #6b7280; }
-        
-        .c-n { color: #2563eb; } .c-p { color: #d97706; } .c-k { color: #dc2626; }
-
-        .visual-bar-container { display: flex; height: 20px; width: 100%; border-radius: 10px; overflow: hidden; background: #e5e7eb; margin-bottom: 10px; }
-        .v-bar { height: 100%; transition: width 0.5s; }
-        .vb-n { background: #3b82f6; } .vb-p { background: #f59e0b; } .vb-k { background: #ef4444; }
-
-        .status-veg { background: #d1fae5; color: #065f46; border: 1px solid #34d399; }
-        .status-gen { background: #fef3c7; color: #92400e; border: 1px solid #fbbf24; }
-        .status-bal { background: #e0f2fe; color: #075985; border: 1px solid #38bdf8; }
-        .status-empty { background: #f3f4f6; color: #6b7280; }
-
-        .btn-reset { background: transparent; border: 1px solid #ef4444; color: #ef4444; padding: 8px; width: 100%; border-radius: 6px; margin-top: 15px; cursor: pointer; }
-        .btn-reset:hover { background: #ef4444; color: white; }
-
-        /* --- TOMBOL WHATSAPP (BARU) --- */
-        .cta-section {
-            padding: 20px;
-            background: #fff;
-            border-top: 1px solid #e5e7eb;
-            text-align: center;
-        }
-
-        .btn-wa {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--wa-color);
-            color: white;
-            text-decoration: none;
-            padding: 15px 25px;
-            border-radius: 50px; /* Bentuk kapsul modern */
-            font-weight: bold;
-            font-size: 0.95rem;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.3);
-            transition: transform 0.2s, background-color 0.2s;
-            width: 100%;
-            max-width: 500px; /* Agar tidak terlalu lebar di PC */
-            text-transform: uppercase;
-        }
-
-        .btn-wa:hover {
-            background-color: var(--wa-dark);
-            transform: translateY(-2px);
-        }
-
-        .wa-icon {
-            width: 24px;
-            height: 24px;
-            margin-right: 10px;
-            fill: white;
-        }
-
-    </style>
+/* Navigasi bawah */
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);
+  padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px));z-index:10}
+nav div{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+nav button{border:0;background:transparent;border-radius:14px;padding:8px 4px;font-size:.78rem;font-weight:700;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav button span{font-size:1.5rem;line-height:1.1}
+nav button[aria-selected=true]{background:var(--green);color:#fff}
+:focus-visible{outline:3px solid var(--gabah);outline-offset:2px}
+footer{text-align:center;font-size:.78rem;color:var(--muted);padding:6px 0 14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
 <body>
 
-<div class="agency-header-center">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Logo_Kementerian_Pertanian_Republik_Indonesia.svg" alt="Logo Kementan" class="logo-kementan-center">
-    <div class="ministry-subtext">KEMENTERIAN PERTANIAN REPUBLIK INDONESIA</div>
-    <div class="agency-title-main">BPP KECAMATAN SALOMEKKO</div>
-</div>
-
-<div class="container">
-    <div class="tool-header">
-        <h2>🌱 Kalkulator Pupuk & Analisa Pintar</h2>
-        <p>Masukkan berat pupuk untuk melihat komposisi dan kegunaannya.</p>
+<header>
+  <div class="wrap">
+    <div class="bar">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/8/8a/Logo_Kementerian_Pertanian_Republik_Indonesia.svg" alt="Logo Kementerian Pertanian">
+      <div class="who">Kementerian Pertanian RI<b>BPP Kecamatan Salomekko</b></div>
+      <a class="wa-top" href="https://wa.me/6282319527214" target="_blank" rel="noopener" aria-label="Chat penyuluh BPP lewat WhatsApp">
+        <svg viewBox="0 0 448 512"><use href="#wa"/></svg>
+      </a>
     </div>
+    <h1>Hitung pupuk lahan Anda</h1>
+    <p>Berapa kg, kapan dipupuk, dan berapa biayanya.</p>
+  </div>
+</header>
 
-    <div class="grid-layout">
-        <div class="input-section">
-            <div class="section-title">📦 Masukkan Berat (Kg)</div>
-            <div class="input-row">
-                <div class="input-label"><strong>Urea / ZA</strong><small>Sumber Nitrogen (Daun)</small></div>
-                <input type="number" id="inpN" placeholder="0" min="0" oninput="recalc()">
-            </div>
-            <div class="input-row">
-                <div class="input-label"><strong>SP-36 / TSP</strong><small>Sumber Phosphate (Akar)</small></div>
-                <input type="number" id="inpP" placeholder="0" min="0" oninput="recalc()">
-            </div>
-            <div class="input-row">
-                <div class="input-label"><strong>KCL / MOP</strong><small>Sumber Kalium (Buah)</small></div>
-                <input type="number" id="inpK" placeholder="0" min="0" oninput="recalc()">
-            </div>
-            <div class="input-row">
-                <div class="input-label"><strong>NPK 16-16-16</strong><small>Pupuk Seimbang</small></div>
-                <input type="number" id="inpNPK" placeholder="0" min="0" oninput="recalc()">
-            </div>
-            <div class="input-row" style="border-bottom: none;">
-                <div class="input-label"><strong>Lainnya</strong><small>Pemberat (0 unsur hara)</small></div>
-                <input type="number" id="inpFiller" placeholder="0" min="0" oninput="recalc()">
-            </div>
-        </div>
+<main class="wrap">
 
-        <div class="result-section">
-            <div class="section-title">📊 Hasil & Kegunaan</div>
-            <div id="analysisCard" class="analysis-card status-empty">
-                <span id="badgeStatus" class="status-badge">Menunggu Data...</span>
-                <div id="analysisTitle" class="analysis-title">-</div>
-                <div id="analysisDesc" class="analysis-desc">Silakan masukkan angka berat pupuk di sebelah kiri.</div>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-box" style="border-bottom: 3px solid #3b82f6;"><span class="stat-val c-n" id="resN">0%</span><span class="stat-label">N</span></div>
-                <div class="stat-box" style="border-bottom: 3px solid #f59e0b;"><span class="stat-val c-p" id="resP">0%</span><span class="stat-label">P</span></div>
-                <div class="stat-box" style="border-bottom: 3px solid #ef4444;"><span class="stat-val c-k" id="resK">0%</span><span class="stat-label">K</span></div>
-            </div>
-            <div class="visual-bar-container">
-                <div id="barN" class="v-bar vb-n" style="width: 0%"></div>
-                <div id="barP" class="v-bar vb-p" style="width: 0%"></div>
-                <div id="barK" class="v-bar vb-k" style="width: 0%"></div>
-            </div>
-            <div style="text-align: center; font-size: 0.8rem; color: #666; margin-bottom: 10px;">Total Berat: <strong id="totalKg">0</strong> Kg</div>
-            <button class="btn-reset" onclick="resetAll()">Reset Data</button>
-        </div>
+<!-- TAB 1: HITUNG -->
+<section id="tab-hitung" role="tabpanel">
+  <div class="card">
+    <h2>1. Tanaman apa?</h2>
+    <div class="chips" id="chips"></div>
+  </div>
+  <div class="card">
+    <h2>2. Berapa luas lahan?</h2>
+    <div class="row">
+      <input class="big" id="luas" type="number" inputmode="decimal" min="0" step="any" placeholder="0" aria-label="Luas lahan">
+      <div class="seg" id="unit">
+        <button data-u="ha" aria-pressed="true">ha</button>
+        <button data-u="are" aria-pressed="false">are</button>
+        <button data-u="m2" aria-pressed="false">m²</button>
+      </div>
     </div>
+    <p class="hint">1 hektar (ha) = 100 are = 10.000 m²</p>
+  </div>
+  <div class="card" id="hasil"></div>
+</section>
 
-    <div class="cta-section">
-        <a href="https://wa.me/6282319527214" target="_blank" class="btn-wa">
-            <svg class="wa-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
-            CHAT BPP SALOMEKKO <br>UNTUK INFORMASI LEBIH LANJUT<br>
-        </a>
-    </div>
+<!-- TAB 2: JADWAL -->
+<section id="tab-jadwal" role="tabpanel" hidden>
+  <div class="card">
+    <h2>Kapan mulai tanam?</h2>
+    <input class="date" id="tanam" type="date" aria-label="Tanggal tanam">
+    <p class="hint" id="jinfo"></p>
+  </div>
+  <div class="card" id="jadwal"></div>
+</section>
 
-</div>
+<!-- TAB 3: CAMPURAN -->
+<section id="tab-campur" role="tabpanel" hidden>
+  <div class="card">
+    <h2>Pupuk yang Anda campur (kg)</h2>
+    <div id="mixrows"></div>
+  </div>
+  <div class="card">
+    <h2>Hasil campuran</h2>
+    <div id="mixout"></div>
+    <button class="btn ghost" id="mixreset">Kosongkan</button>
+  </div>
+</section>
+
+<footer>Angka adalah acuan umum. Untuk anjuran sesuai tanah Anda, tanyakan ke penyuluh BPP.</footer>
+</main>
+
+<nav><div role="tablist">
+  <button role="tab" data-t="hitung" aria-selected="true"><span>🧮</span>Hitung</button>
+  <button role="tab" data-t="jadwal" aria-selected="false"><span>📅</span>Jadwal</button>
+  <button role="tab" data-t="campur" aria-selected="false"><span>⚗️</span>Campuran</button>
+</div></nav>
+
+<svg width="0" height="0" style="position:absolute"><defs><path id="wa" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.900-94-25.700l-6.700-4-69.800 18.300L72 359.200l-4.400-7c-18.500-29.400-28.200-63.300-28.200-98.200 0-101.700 82.800-184.500 184.600-184.500 49.300 0 95.600 19.200 130.400 54.100 34.800 34.900 56.200 81.200 56.100 130.500 0 101.800-84.900 184.600-186.600 184.600zm101.200-138.200c-5.500-2.800-32.800-16.200-37.900-18-5.100-1.900-8.800-2.800-12.500 2.800-3.700 5.600-14.300 18-17.600 21.800-3.200 3.700-6.500 4.200-12 1.400-32.600-16.300-54-29.100-75.500-66-5.700-9.800 5.700-9.100 16.300-30.300 1.800-3.700.9-6.900-.5-9.700-1.400-2.800-12.500-30.100-17.100-41.200-4.500-10.800-9.100-9.300-12.500-9.500-3.200-.2-6.900-.2-10.600-.2-3.700 0-9.700 1.400-14.800 6.900-5.100 5.600-19.400 19-19.400 46.300 0 27.300 19.900 53.700 22.600 57.400 2.800 3.700 39.100 59.700 94.800 83.800 35.200 15.200 49 16.500 66.600 13.900 10.700-1.600 32.800-13.400 37.400-26.400 4.600-13 4.600-24.100 3.200-26.400-1.300-2.500-5-3.900-10.500-6.600z"/></defs></svg>
 
 <script>
-    function recalc() {
-        let wN = parseFloat(document.getElementById('inpN').value) || 0; 
-        let wP = parseFloat(document.getElementById('inpP').value) || 0; 
-        let wK = parseFloat(document.getElementById('inpK').value) || 0; 
-        let wNPK = parseFloat(document.getElementById('inpNPK').value) || 0; 
-        let wFill = parseFloat(document.getElementById('inpFiller').value) || 0;
+/* ---------- Data ---------- */
+// Pupuk: u=Urea, s=SP-36, k=KCl, n=NPK 16-16-16
+const F = {
+  u:{name:'Urea',     role:'Nitrogen · untuk daun & batang', col:'#2563eb'},
+  s:{name:'SP-36',    role:'Fosfat · untuk akar',            col:'#d98a00'},
+  k:{name:'KCl',      role:'Kalium · untuk bulir & buah',    col:'#d6372c'},
+  n:{name:'NPK 16-16-16', role:'Pupuk majemuk, seimbang',    col:'#1f6b3f'}
+};
+// dosis = kg per hektar (acuan umum); tahap: hst, nama, bagian tiap pupuk [u,s,k,n]
+const KOM = {
+  padi:{n:'Padi',e:'🌾',d:{u:250,s:75,k:75,n:0},t:[
+    {h:7, l:'Pupuk dasar', b:{u:.33,s:1,k:.5}},
+    {h:25,l:'Susulan 1',   b:{u:.33}},
+    {h:45,l:'Susulan 2',   b:{u:.34,k:.5}}]},
+  jagung:{n:'Jagung',e:'🌽',d:{u:300,s:150,k:100,n:0},t:[
+    {h:7, l:'Pupuk dasar', b:{u:.33,s:1,k:1}},
+    {h:30,l:'Susulan',     b:{u:.67}}]},
+  cabai:{n:'Cabai',e:'🌶️',d:{u:150,s:100,k:100,n:500},t:[
+    {h:0, l:'Sebelum tanam', b:{s:1,n:.25}},
+    {h:14,l:'Susulan 1', b:{u:.34,n:.25}},
+    {h:28,l:'Susulan 2', b:{u:.33,n:.25,k:.5}},
+    {h:42,l:'Susulan 3', b:{u:.33,n:.25,k:.5}}]},
+  kacang:{n:'Kacang tanah',e:'🥜',d:{u:50,s:100,k:100,n:0},t:[
+    {h:0, l:'Sebelum tanam', b:{u:1,s:1,k:.5}},
+    {h:30,l:'Susulan',       b:{k:.5}}]}
+};
+const HA = {ha:1, are:0.01, m2:0.0001};
 
-        let totalW = wN + wP + wK + wNPK + wFill;
+/* ---------- State ---------- */
+let S = {kom:'padi', luas:'', unit:'ha', harga:{u:'',s:'',k:'',n:''}, tanam:'', done:{}, mix:{u:'',s:'',k:'',n:'',x:''}};
+try{ const r = localStorage.getItem('pupuk-salomekko'); if(r) S = Object.assign(S, JSON.parse(r)); }catch(e){}
+const save = () => { try{ localStorage.setItem('pupuk-salomekko', JSON.stringify(S)); }catch(e){} };
 
-        if (totalW === 0) { resetUI(); return; }
+const $ = id => document.getElementById(id);
+const nf = new Intl.NumberFormat('id-ID',{maximumFractionDigits:1});
+const rp = v => 'Rp ' + new Intl.NumberFormat('id-ID').format(Math.round(v));
+const num = v => { const x = parseFloat(String(v).replace(',','.')); return isFinite(x) && x>0 ? x : 0; };
+const ha = () => num(S.luas) * HA[S.unit];
+const kgOf = (key, share=1) => (KOM[S.kom].d[key]||0) * (ha()||1) * share;
+const sak = kg => kg>=1 ? '≈ ' + nf.format(kg/50) + ' sak (50 kg)' : '';
 
-        let kgN = (wN * 0.46) + (wNPK * 0.16);
-        let kgP = (wP * 0.36) + (wNPK * 0.16);
-        let kgK = (wK * 0.60) + (wNPK * 0.16);
+/* ---------- Tab ---------- */
+function showTab(t){
+  document.querySelectorAll('section[role=tabpanel]').forEach(s => s.hidden = s.id !== 'tab-'+t);
+  document.querySelectorAll('nav button').forEach(b => b.setAttribute('aria-selected', b.dataset.t===t));
+  scrollTo({top:0});
+}
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => showTab(b.dataset.t));
 
-        let pN = (kgN / totalW) * 100;
-        let pP = (kgP / totalW) * 100;
-        let pK = (kgK / totalW) * 100;
+/* ---------- Hitung ---------- */
+function drawChips(){
+  $('chips').innerHTML = Object.entries(KOM).map(([k,v]) =>
+    `<button class="chip" data-k="${k}" aria-pressed="${S.kom===k}"><span>${v.e}</span>${v.n}</button>`).join('');
+  $('chips').querySelectorAll('.chip').forEach(c => c.onclick = () => { S.kom = c.dataset.k; save(); drawChips(); drawHasil(); drawJadwal(); });
+}
+function waLink(text){ return 'https://wa.me/6282319527214?text=' + encodeURIComponent(text); }
+const WA = '<svg viewBox="0 0 448 512"><use href="#wa"/></svg>';
 
-        document.getElementById('resN').innerText = pN.toFixed(1) + "%";
-        document.getElementById('resP').innerText = pP.toFixed(1) + "%";
-        document.getElementById('resK').innerText = pK.toFixed(1) + "%";
-        document.getElementById('totalKg').innerText = totalW.toFixed(1);
+function drawHasil(){
+  const el = $('hasil'), L = ha();
+  if(!L){
+    el.innerHTML = '<div class="empty"><span>👆</span>Isi luas lahan di atas,<br>kebutuhan pupuk langsung dihitung.</div>';
+    return;
+  }
+  const keys = Object.keys(F).filter(k => KOM[S.kom].d[k] > 0);
+  const totalKg = keys.reduce((a,k) => a + kgOf(k), 0);
+  let biaya = 0, rows = '', lines = [];
+  keys.forEach(k => {
+    const kg = kgOf(k), h = num(S.harga[k]), sub = kg*h; biaya += sub;
+    lines.push(`${F[k].name}: ${nf.format(kg)} kg`);
+    rows += `<div class="fert"><div class="fhead"><div class="dot" style="background:${F[k].col}"></div>
+      <div class="fname"><b>${F[k].name}</b><small>${F[k].role}</small></div>
+      <div class="fkg"><b>${nf.format(kg)} kg</b><small>${sak(kg)}</small></div></div>
+      <label class="fprice">Harga per kg
+      <input class="price" data-k="${k}" type="number" inputmode="numeric" min="0" placeholder="Rp" value="${S.harga[k]}" aria-label="Harga ${F[k].name} per kg">
+      <output>${h ? rp(sub) : ''}</output></label></div>`;
+  });
+  const luasTxt = nf.format(num(S.luas)) + ' ' + (S.unit==='m2'?'m²':S.unit);
+  el.innerHTML = `<h2>Kebutuhan ${KOM[S.kom].n} · ${luasTxt}</h2>
+    <div class="total"><small>Total semua pupuk</small><strong>${nf.format(totalKg)} kg</strong></div>${rows}
+    ${biaya ? `<div class="cost"><span>Perkiraan biaya</span><span>${rp(biaya)}</span></div>` : '<p class="hint">Isi harga per kg di kios untuk melihat perkiraan biaya.</p>'}
+    <p class="hint">Dosis acuan umum per hektar. Tiap tanah bisa berbeda.</p>
+    <a class="btn wa" target="_blank" rel="noopener" href="${waLink(`Halo penyuluh BPP Salomekko, saya menanam ${KOM[S.kom].n}, luas ${luasTxt}. Hasil hitung: ${lines.join(', ')}. Mohon arahannya.`)}">${WA}Tanya penyuluh dengan hasil ini</a>`;
+  el.querySelectorAll('.price').forEach(i => i.oninput = () => {
+    S.harga[i.dataset.k] = i.value; save();
+    // perbarui tanpa menutup keyboard
+    let b = 0; keys.forEach(k => b += kgOf(k)*num(S.harga[k]));
+    i.parentElement.querySelector('output').textContent = num(i.value) ? rp(kgOf(i.dataset.k)*num(i.value)) : '';
+    const c = el.querySelector('.cost');
+    if(c) c.lastElementChild.textContent = rp(b); else drawHasil(), el.querySelector(`.price[data-k=${i.dataset.k}]`).focus();
+  });
+}
+$('luas').value = S.luas;
+$('luas').oninput = e => { S.luas = e.target.value; save(); drawHasil(); drawJadwal(); };
+$('unit').querySelectorAll('button').forEach(b => b.onclick = () => {
+  S.unit = b.dataset.u; save();
+  $('unit').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x===b));
+  drawHasil(); drawJadwal();
+});
+$('unit').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x.dataset.u===S.unit));
 
-        let totalNutrient = pN + pP + pK;
-        if(totalNutrient > 0){
-            document.getElementById('barN').style.width = (pN / totalNutrient * 100) + "%";
-            document.getElementById('barP').style.width = (pP / totalNutrient * 100) + "%";
-            document.getElementById('barK').style.width = (pK / totalNutrient * 100) + "%";
-        }
-        runAnalysis(pN, pP, pK);
+/* ---------- Jadwal ---------- */
+function drawJadwal(){
+  const kom = KOM[S.kom], L = ha();
+  $('jinfo').textContent = L ? `Jumlah pupuk untuk ${kom.n}, ${nf.format(num(S.luas))} ${S.unit==='m2'?'m²':S.unit}.`
+                             : `Luas lahan belum diisi, jumlah ditampilkan per 1 hektar. Isi di tab Hitung.`;
+  const base = S.tanam ? new Date(S.tanam + 'T00:00:00') : null;
+  const today = new Date(); today.setHours(0,0,0,0);
+  let nextSet = false;
+  const html = kom.t.map((t,i) => {
+    const id = S.kom + i, done = !!S.done[id + '|' + S.tanam];
+    let d = null, cls = '', day = t.h, sm = 'HST';
+    if(base){
+      d = new Date(base); d.setDate(d.getDate() + t.h);
+      day = d.getDate(); sm = d.toLocaleDateString('id-ID',{month:'short'});
+      if(!done){ if(d < today) cls = 'late'; else if(!nextSet){ cls = 'next'; nextSet = true; } }
     }
+    const tags = Object.keys(t.b).filter(k => t.b[k] && kom.d[k]).map(k => `<span class="tag">${F[k].name} ${nf.format(kgOf(k, t.b[k]))} kg</span>`).join('');
+    const tgl = d ? d.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long'}) : '';
+    const note = cls==='late' ? ' · terlewat' : cls==='next' ? ' · berikutnya' : '';
+    return `<div class="step ${cls} ${done?'done':''}"><div class="when"><b>${day}</b><small>${sm}</small></div>
+      <div class="sbody"><b>${t.l}</b><div class="tgl">${t.h} hari setelah tanam (HST)${note}${tgl ? '<br>'+tgl : ''}</div>
+      <div class="tags">${tags}</div>
+      <label class="chk"><input type="checkbox" data-id="${id}" ${done?'checked':''}> Sudah dipupuk</label></div></div>`;
+  }).join('');
+  $('jadwal').innerHTML = `<h2>Jadwal pemupukan ${kom.e} ${kom.n}</h2>` + html;
+  $('jadwal').querySelectorAll('input').forEach(c => c.onchange = () => { S.done[c.dataset.id + '|' + S.tanam] = c.checked; save(); drawJadwal(); });
+}
+$('tanam').value = S.tanam;
+$('tanam').onchange = e => { S.tanam = e.target.value; save(); drawJadwal(); };
 
-    function runAnalysis(n, p, k) {
-        const card = document.getElementById('analysisCard');
-        const badge = document.getElementById('badgeStatus');
-        const title = document.getElementById('analysisTitle');
-        const desc = document.getElementById('analysisDesc');
+/* ---------- Campuran ---------- */
+const MIX = [
+  {k:'u',n:'Urea / ZA',s:'Nitrogen (daun)',c:.46,col:F.u.col},
+  {k:'s',n:'SP-36 / TSP',s:'Fosfat (akar)',c:.36,col:F.s.col},
+  {k:'k',n:'KCl / MOP',s:'Kalium (buah)',c:.60,col:F.k.col},
+  {k:'n',n:'NPK 16-16-16',s:'Pupuk seimbang',c:.16,col:F.n.col},
+  {k:'x',n:'Lainnya',s:'Pemberat, tanpa unsur hara',c:0,col:'#9aa89f'}
+];
+function drawMixRows(){
+  $('mixrows').innerHTML = MIX.map(m => `<div class="mix"><div class="fname"><b>${m.n}</b><small>${m.s}</small></div>
+    <div class="step-in"><button data-k="${m.k}" data-d="-5" aria-label="Kurangi 5 kg ${m.n}">−</button>
+    <input class="num" data-k="${m.k}" type="number" inputmode="decimal" min="0" placeholder="0" value="${S.mix[m.k]}" aria-label="Berat ${m.n} (kg)">
+    <button data-k="${m.k}" data-d="5" aria-label="Tambah 5 kg ${m.n}">+</button></div></div>`).join('');
+  $('mixrows').querySelectorAll('.num').forEach(i => i.oninput = () => { S.mix[i.dataset.k] = i.value; save(); drawMix(); });
+  $('mixrows').querySelectorAll('button').forEach(b => b.onclick = () => {
+    const k = b.dataset.k, v = Math.max(0, num(S.mix[k]) + +b.dataset.d);
+    S.mix[k] = v ? String(v) : ''; save();
+    $('mixrows').querySelector(`.num[data-k=${k}]`).value = S.mix[k]; drawMix();
+  });
+}
+function drawMix(){
+  const w = {}; MIX.forEach(m => w[m.k] = num(S.mix[m.k]));
+  const tot = MIX.reduce((a,m) => a + w[m.k], 0);
+  if(!tot){ $('mixout').innerHTML = '<div class="empty"><span>⚗️</span>Isi berat pupuk di atas untuk melihat kandungan campurannya.</div>'; return; }
+  const N = w.u*.46 + w.n*.16, P = w.s*.36 + w.n*.16, K = w.k*.60 + w.n*.16;
+  const pN = N/tot*100, pP = P/tot*100, pK = K/tot*100, sum = pN+pP+pK || 1;
+  let cls='bal', lab='Seimbang', ttl='Kandungan merata', txt='Aman untuk pemupukan rutin.';
+  if(pN > pP+3 && pN > pK+3){ cls='veg'; lab='Fase pertumbuhan'; ttl='Dominan nitrogen: untuk daun'; txt='Cocok untuk awal tanam, memacu batang, akar, dan daun.'; }
+  else if((pP > pN || pK > pN) && (pP+pK) > pN+3){ cls='gen'; lab='Fase berbunga & berbuah'; ttl='Dominan fosfat & kalium: untuk bunga dan buah'; txt='Pakai saat tanaman mulai berbunga agar tidak rontok dan buah/bulir membesar.'; }
+  $('mixout').innerHTML = `<div class="verdict ${cls}"><small>${lab}</small><b>${ttl}</b><p>${txt}</p></div>
+    <div class="stats">
+      <div class="stat" style="border-color:${F.u.col}"><b style="color:${F.u.col}">${pN.toFixed(1)}%</b><small>N</small></div>
+      <div class="stat" style="border-color:${F.s.col}"><b style="color:${F.s.col}">${pP.toFixed(1)}%</b><small>P</small></div>
+      <div class="stat" style="border-color:${F.k.col}"><b style="color:${F.k.col}">${pK.toFixed(1)}%</b><small>K</small></div></div>
+    <div class="vbar"><i style="width:${pN/sum*100}%;background:${F.u.col}"></i><i style="width:${pP/sum*100}%;background:${F.s.col}"></i><i style="width:${pK/sum*100}%;background:${F.k.col}"></i></div>
+    <p class="hint">Total campuran: <b>${nf.format(tot)} kg</b></p>`;
+}
+$('mixreset').onclick = () => { S.mix = {u:'',s:'',k:'',n:'',x:''}; save(); drawMixRows(); drawMix(); };
 
-        card.className = 'analysis-card';
-
-        if (n > p + 3 && n > k + 3) {
-            card.classList.add('status-veg');
-            badge.innerText = "Fase Pertumbuhan (Vegetatif)";
-            title.innerText = "Dominan Nitrogen: Fokus Daun";
-            desc.innerText = "Campuran tinggi Nitrogen. Cocok untuk masa awal tanam untuk memacu pertumbuhan akar, batang, dan daun.";
-        }
-        else if ((p > n || k > n) && (p + k) > n + 3) {
-            card.classList.add('status-gen');
-            badge.innerText = "Fase Pembuahan (Generatif)";
-            title.innerText = "Dominan P & K: Fokus Bunga/Buah";
-            desc.innerText = "Kaya P dan K. Gunakan saat tanaman mulai berbunga untuk mencegah rontok dan membesarkan buah/umbi.";
-        }
-        else {
-            card.classList.add('status-bal');
-            badge.innerText = "Seimbang (Perawatan)";
-            title.innerText = "Kandungan Seimbang";
-            desc.innerText = "Kandungan hara relatif rata. Aman digunakan untuk pemupukan rutin tanaman.";
-        }
-    }
-
-    function resetUI() {
-        document.getElementById('resN').innerText = "0%";
-        document.getElementById('resP').innerText = "0%";
-        document.getElementById('resK').innerText = "0%";
-        document.getElementById('totalKg').innerText = "0";
-        document.getElementById('barN').style.width = "0%";
-        document.getElementById('barP').style.width = "0%";
-        document.getElementById('barK').style.width = "0%";
-        const card = document.getElementById('analysisCard');
-        card.className = 'analysis-card status-empty';
-        document.getElementById('badgeStatus').innerText = "Menunggu Data...";
-        document.getElementById('analysisTitle').innerText = "-";
-        document.getElementById('analysisDesc').innerText = "Silakan masukkan angka berat pupuk di sebelah kiri.";
-    }
-
-    function resetAll() {
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(i => i.value = '');
-        recalc();
-    }
+/* ---------- Mulai ---------- */
+drawChips(); drawHasil(); drawJadwal(); drawMixRows(); drawMix();
 </script>
-
 </body>
 </html>
