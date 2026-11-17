@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#14432a">
-<title>Kalkulator Pupuk - BPP Salomekko</title>
+<meta name="theme-color" content="#e7eee7">
+<title>Kalkulator Pupuk — Neumorphic Edition</title>
 <style>
 :root{
   --ink:#10281a; --muted:#5d6f63; --line:#dbe5d6; --bg:#edf3e9; --card:#fff;
@@ -101,10 +101,22 @@ section[hidden]{display:none}
 .step-in button:first-child{border-radius:12px 0 0 12px;border-right:0}
 .step-in button:last-child{border-radius:0 12px 12px 0;border-left:0}
 .num{width:64px;height:48px;border:2px solid var(--line);background:var(--card);text-align:center;font-size:1.15rem;font-weight:800;border-radius:0}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
-.stat{border-radius:14px;padding:10px 4px;text-align:center;background:var(--soft);border-bottom:4px solid}
-.stat b{display:block;font-size:1.3rem;font-weight:800}
-.stat small{font-size:.75rem;color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:11px;margin:15px 0 16px}
+.stat{
+  --accent:#6c9b78;position:relative;isolation:isolate;overflow:hidden;min-width:0;
+  border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);border-bottom:0;
+  border-radius:19px;padding:13px 7px 12px;text-align:center;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--accent) 13%,var(--card)),var(--card) 72%);
+  box-shadow:5px 5px 11px var(--shadow-dark),-5px -5px 11px var(--shadow-light),inset 0 1px 0 rgba(255,255,255,.65);
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.stat:before{content:"";position:absolute;z-index:-1;width:62px;height:62px;right:-22px;top:-27px;border-radius:50%;background:var(--accent);opacity:.13;filter:blur(1px)}
+.stat:after{content:"";position:absolute;left:18%;right:18%;bottom:0;height:3px;border-radius:5px 5px 0 0;background:var(--accent);box-shadow:0 0 10px color-mix(in srgb,var(--accent) 65%,transparent)}
+.stat .stat-letter{display:grid;place-items:center;width:27px;height:27px;margin:0 auto 8px;border-radius:9px;color:#fff;background:var(--accent);font-size:.78rem;font-weight:900;box-shadow:0 3px 8px color-mix(in srgb,var(--accent) 35%,transparent)}
+.stat b{display:block;font-size:clamp(1.05rem,4vw,1.35rem);font-weight:850;line-height:1.15;letter-spacing:-.035em;color:var(--accent)!important;font-variant-numeric:tabular-nums}
+.stat small{display:block;margin-top:5px;font-size:.68rem;font-weight:750;letter-spacing:.035em;color:var(--muted);text-transform:uppercase}
+@media(hover:hover){.stat:hover{transform:translateY(-3px);box-shadow:7px 9px 15px var(--shadow-dark),-6px -6px 12px var(--shadow-light)}}
+@media(prefers-color-scheme:dark){.stat{box-shadow:5px 5px 11px var(--shadow-dark),-5px -5px 11px var(--shadow-light),inset 0 1px 0 rgba(255,255,255,.06)}}
 .vbar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--line);margin-bottom:8px}
 .vbar i{display:block;height:100%;transition:width .4s}
 .verdict{border-radius:16px;padding:14px;margin-bottom:12px;background:var(--soft)}
@@ -133,6 +145,167 @@ nav button[aria-selected=true]{background:var(--green);color:#fff}
 :focus-visible{outline:3px solid var(--gabah);outline-offset:2px}
 footer{text-align:center;font-size:.78rem;color:var(--muted);padding:6px 0 14px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== NEUMORPHIC REDESIGN ===== */
+:root{
+  --bg:#e7eee7; --card:#e7eee7; --soft:#e7eee7;
+  --ink:#294535; --muted:#718477; --line:#d2ddd2;
+  --green:#e7eee7; --green2:#2e8b57; --gabah:#e7c66b; --gabah-ink:#594515;
+  --shadow-dark:#becabd; --shadow-light:#ffffff;
+}
+@media (prefers-color-scheme:dark){
+ :root{
+  --bg:#202c25;--card:#202c25;--soft:#202c25;--ink:#e1eee4;--muted:#9aafa0;
+  --line:#34483a;--green:#202c25;--green2:#70c895;--gabah:#806b35;--gabah-ink:#fff4d0;
+  --shadow-dark:#17211b;--shadow-light:#29372e;
+ }
+}
+html,body{background:var(--bg)}
+body{color:var(--ink)}
+header{background:var(--bg);color:var(--ink);padding-bottom:58px}
+header .who{color:var(--muted)}
+header .who b{color:var(--ink)}
+.bar img{background:var(--bg);border-radius:14px;padding:7px;box-shadow:5px 5px 10px var(--shadow-dark),-5px -5px 10px var(--shadow-light)}
+.wa-top{box-shadow:4px 4px 9px var(--shadow-dark),-4px -4px 9px var(--shadow-light)}
+h1{letter-spacing:-.045em;font-size:clamp(1.7rem,6vw,2.15rem)}
+header p{color:var(--muted);opacity:1}
+main{margin-top:-35px}
+.card{
+ background:var(--card);border:1px solid rgba(255,255,255,.22);border-radius:24px;padding:19px;
+ box-shadow:9px 9px 18px var(--shadow-dark),-9px -9px 18px var(--shadow-light);
+}
+.card h2{letter-spacing:-.02em}
+.chips{grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.chip{
+ position:relative;isolation:isolate;overflow:hidden;height:112px;min-height:112px;
+ border:0;border-radius:19px;padding:13px 4px 11px;
+ background:var(--bg);color:var(--muted);--wc-light:#8de8bd;--wc-dark:#249c69;
+ --glow:rgba(36,156,105,.45);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+ box-shadow:6px 6px 12px var(--shadow-dark),-6px -6px 12px var(--shadow-light);
+ transition:transform .2s cubic-bezier(.4,0,.2,1),box-shadow .2s,color .3s;
+}
+.chip .plant-icon,.chip .plant-name{position:relative;z-index:3}
+.chip .plant-icon{font-size:1.8rem;line-height:1.1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.08))}
+.chip .plant-name{font-size:.78rem;font-weight:750}
+.chip .press-flash{
+ position:absolute;inset:0;border-radius:inherit;
+ background:radial-gradient(circle,var(--wc-dark),transparent 70%);
+ opacity:0;pointer-events:none;z-index:4;
+}
+.chip.flash .press-flash{animation:flashPulse .35s ease-out}
+@keyframes flashPulse{0%{opacity:.7;transform:scale(.5)}100%{opacity:0;transform:scale(1.6)}}
+/* Liquid rise: a real full-height layer travels upward from below the card */
+.chip .water{
+ position:absolute;left:0;right:0;top:0;height:100%;display:block;
+ background:linear-gradient(180deg,var(--wc-light) 0%,var(--wc-dark) 100%);
+ transform:translate3d(0,105%,0);z-index:1;pointer-events:none;
+ will-change:transform;
+}
+.chip[aria-pressed=true] .water{
+ animation:liquidRise .95s cubic-bezier(.22,.75,.25,1) both;
+}
+@keyframes liquidRise{
+ 0%{transform:translate3d(0,105%,0)}
+ 68%{transform:translate3d(0,-2%,0)}
+ 84%{transform:translate3d(0,1%,0)}
+ 100%{transform:translate3d(0,0,0)}
+}
+.chip .water::before{
+ content:"";position:absolute;top:-6px;left:-30%;width:160%;height:13px;
+ background:var(--wc-light);border-radius:44%;opacity:.96;
+ animation:waveMove 2s ease-in-out infinite;
+}
+@keyframes waveMove{
+ 0%,100%{transform:translateX(-8%) rotate(0deg)}
+ 50%{transform:translateX(8%) rotate(6deg)}
+}
+.chip .bubbles{position:absolute;inset:0;z-index:2;pointer-events:none}
+.chip .bubble{
+ position:absolute;bottom:2px;width:3.5px;height:3.5px;border-radius:50%;
+ background:rgba(255,255,255,.92);box-shadow:0 0 5px rgba(255,255,255,.55);opacity:0;
+}
+.chip[aria-pressed=true] .bubble{animation:bubbleUp 1.5s ease-in infinite}
+.chip .bubble.b1{left:28%;animation-delay:.1s}
+.chip .bubble.b2{left:47%;width:2.6px;height:2.6px;animation-delay:.5s}
+.chip .bubble.b3{left:64%;animation-delay:.9s}
+.chip .bubble.b4{left:40%;width:2.8px;height:2.8px;animation-delay:1.3s}
+@keyframes bubbleUp{
+ 0%{opacity:0;transform:translateY(0) scale(.5)}
+ 12%{opacity:.9}85%{opacity:.25}
+ 100%{opacity:0;transform:translateY(-72px) scale(1)}
+}
+.chip .droplet{
+ position:absolute;top:-4px;width:3px;height:5px;
+ border-radius:50% 50% 50% 50% / 65% 65% 35% 35%;
+ background:linear-gradient(180deg,rgba(255,255,255,.95),var(--wc-dark));
+ box-shadow:0 0 3px rgba(255,255,255,.4);opacity:.9;z-index:5;pointer-events:none;
+ animation:dropSlide 1.15s cubic-bezier(.3,.4,.5,1) forwards;
+}
+@keyframes dropSlide{
+ 0%{transform:translate(0,0) scaleY(1);opacity:.95}
+ 35%{transform:translate(var(--wobble1,1px),16px) scaleY(1.1)}
+ 70%{transform:translate(var(--wobble2,-1px),34px) scaleY(1.2);opacity:.7}
+ 100%{transform:translate(0,52px) scaleY(1.3);opacity:0}
+}
+.chip[aria-pressed=true]{
+ color:#fff;transform:translateY(1px);
+ box-shadow:inset 5px 5px 10px rgba(16,83,53,.24),inset -4px -4px 9px rgba(255,255,255,.2),0 0 15px var(--glow);
+}
+.chip:active{transform:scale(.96) translateY(1px)}
+.chip:focus-visible{outline:2px solid var(--wc-dark);outline-offset:3px}
+.big,.date,.price,.num{
+ border:0;background:var(--bg);color:var(--ink);border-radius:15px;
+ box-shadow:inset 5px 5px 9px var(--shadow-dark),inset -5px -5px 9px var(--shadow-light);
+}
+.big:focus,.num:focus,.date:focus,.price:focus{outline:2px solid var(--green2);outline-offset:2px}
+.seg{border:0;background:var(--bg);padding:5px;border-radius:15px;gap:3px;box-shadow:inset 4px 4px 8px var(--shadow-dark),inset -4px -4px 8px var(--shadow-light)}
+.seg button{border-radius:10px;background:transparent;padding:0 11px}
+.seg button[aria-pressed=true]{background:linear-gradient(145deg,#45b77b,#248452);color:white;box-shadow:3px 3px 7px rgba(20,90,53,.25),-2px -2px 5px rgba(255,255,255,.25)}
+.total{background:linear-gradient(145deg,#287f50,#17613a);border-radius:18px;box-shadow:inset 2px 2px 5px rgba(255,255,255,.12),6px 6px 12px rgba(20,70,40,.16)}
+.when,.tag,.stat,.verdict{border:0;box-shadow:inset 4px 4px 8px var(--shadow-dark),inset -4px -4px 8px var(--shadow-light)}
+.step.next .when{background:var(--gabah);color:var(--gabah-ink)}
+.step.late .when{background:#f2d4ce;color:#8a1c14}
+.step-in button{border:0;background:var(--bg);box-shadow:4px 4px 8px var(--shadow-dark),-4px -4px 8px var(--shadow-light)}
+.step-in button:active,.btn:active{box-shadow:inset 4px 4px 8px var(--shadow-dark),inset -4px -4px 8px var(--shadow-light);transform:scale(.97)}
+.step-in button:first-child{border-radius:12px 0 0 12px}
+.step-in button:last-child{border-radius:0 12px 12px 0}
+.btn{transition:transform .2s,box-shadow .2s}
+.btn.wa{background:linear-gradient(145deg,#27bd6a,#16864a);box-shadow:6px 6px 12px var(--shadow-dark),-5px -5px 10px var(--shadow-light)}
+.btn.ghost{border:0;background:var(--bg);box-shadow:5px 5px 10px var(--shadow-dark),-5px -5px 10px var(--shadow-light)}
+nav{
+ left:50%;right:auto;bottom:calc(10px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+ width:min(92%,520px);padding:10px;border:0;border-radius:25px;background:var(--bg);
+ box-shadow:8px 8px 18px var(--shadow-dark),-8px -8px 18px var(--shadow-light);
+}
+nav div{gap:10px}
+nav button{
+ position:relative;isolation:isolate;overflow:hidden;min-height:55px;border-radius:17px;
+ background:var(--bg);padding:7px 5px;color:var(--muted);
+ box-shadow:4px 4px 8px var(--shadow-dark),-4px -4px 8px var(--shadow-light);
+ transition:transform .22s,box-shadow .22s,color .3s;
+}
+nav button::before{
+ content:"";position:absolute;z-index:-1;left:-10%;right:-10%;bottom:0;height:0;
+ border-radius:48% 48% 0 0;background:linear-gradient(180deg,#8de8bd,#249c69);
+ transition:height .48s cubic-bezier(.2,.8,.25,1.12);
+}
+nav button::after{
+ content:"";position:absolute;z-index:0;left:-30%;top:100%;width:160%;height:10px;
+ border-radius:45%;background:rgba(225,255,239,.8);opacity:0;
+}
+nav button[aria-selected=true]{
+ color:#fff;box-shadow:inset 4px 4px 8px rgba(16,83,53,.22),inset -4px -4px 8px rgba(255,255,255,.22);
+}
+nav button[aria-selected=true]::before{height:100%}
+nav button[aria-selected=true]::after{top:0;opacity:.9;animation:chipWave 2.8s ease-in-out infinite}
+nav button span,nav button{z-index:1}
+nav button span{position:relative}
+nav button:active{transform:scale(.95)}
+footer{padding-bottom:12px}
+@media(max-width:390px){.chips{gap:8px}.chip{height:100px;min-height:100px}.chip .plant-name{font-size:.7rem}.chip .plant-icon{font-size:1.55rem}.seg button{padding:0 9px}}
+@media(prefers-reduced-motion:reduce){.chip::before,.chip::after,nav button::before,nav button::after{animation:none!important;transition:none!important}}
+
 </style>
 </head>
 <body>
@@ -260,9 +433,47 @@ document.querySelectorAll('nav button').forEach(b => b.onclick = () => showTab(b
 
 /* ---------- Hitung ---------- */
 function drawChips(){
-  $('chips').innerHTML = Object.entries(KOM).map(([k,v]) =>
-    `<button class="chip" data-k="${k}" aria-pressed="${S.kom===k}"><span>${v.e}</span>${v.n}</button>`).join('');
-  $('chips').querySelectorAll('.chip').forEach(c => c.onclick = () => { S.kom = c.dataset.k; save(); drawChips(); drawHasil(); drawJadwal(); });
+  const liquidColors = {
+    padi:   {light:'#5ef2ff', dark:'#0091ff', glow:'rgba(0,145,255,.55)'},   // biru cyan
+    jagung: {light:'#ffb03d', dark:'#ff4d00', glow:'rgba(255,77,0,.55)'},    // jingga
+    cabai:  {light:'#ff6ea8', dark:'#ff0059', glow:'rgba(255,0,89,.55)'},   // merah pink
+    kacang: {light:'#ffe14d', dark:'#ffb700', glow:'rgba(255,183,0,.55)'}   // kuning emas
+  };
+  $('chips').innerHTML = Object.entries(KOM).map(([k,v]) => {
+    const c = liquidColors[k] || liquidColors.padi;
+    return `<button class="chip" data-k="${k}" aria-pressed="${S.kom===k}"
+      style="--wc-light:${c.light};--wc-dark:${c.dark};--glow:${c.glow}">
+      <span class="press-flash"></span><span class="water"></span>
+      <span class="bubbles"><i class="bubble b1"></i><i class="bubble b2"></i><i class="bubble b3"></i><i class="bubble b4"></i></span>
+      <span class="plant-icon">${v.e}</span><span class="plant-name">${v.n}</span>
+    </button>`;
+  }).join('');
+  $('chips').querySelectorAll('.chip').forEach(c => {
+    c.onclick = () => {
+      S.kom = c.dataset.k; save();
+      $('chips').querySelectorAll('.chip').forEach(x => {
+        x.setAttribute('aria-pressed', x === c);
+        if (x === c) {
+          const water = x.querySelector('.water');
+          water.style.animation = 'none';
+          void water.offsetHeight;
+          water.style.animation = '';
+        }
+      });
+      drawHasil(); drawJadwal();
+    };
+    c.onpointerdown = () => { c.classList.remove('flash'); void c.offsetWidth; c.classList.add('flash'); };
+    c.onanimationend = e => { if(e.animationName === 'flashPulse') c.classList.remove('flash'); };
+    c.onpointerleave = () => {
+      for(let i=0;i<4;i++){
+        const d=document.createElement('span'); d.className='droplet';
+        d.style.left=(20+Math.random()*60)+'%';
+        d.style.setProperty('--wobble1',(Math.random()*4-2).toFixed(1)+'px');
+        d.style.setProperty('--wobble2',(Math.random()*4-2).toFixed(1)+'px');
+        c.appendChild(d); d.addEventListener('animationend',()=>d.remove(),{once:true});
+      }
+    };
+  });
 }
 function waLink(text){ return 'https://wa.me/6282319527214?text=' + encodeURIComponent(text); }
 const WA = '<svg viewBox="0 0 448 512"><use href="#wa"/></svg>';
@@ -371,9 +582,9 @@ function drawMix(){
   else if((pP > pN || pK > pN) && (pP+pK) > pN+3){ cls='gen'; lab='Fase berbunga & berbuah'; ttl='Dominan fosfat & kalium: untuk bunga dan buah'; txt='Pakai saat tanaman mulai berbunga agar tidak rontok dan buah/bulir membesar.'; }
   $('mixout').innerHTML = `<div class="verdict ${cls}"><small>${lab}</small><b>${ttl}</b><p>${txt}</p></div>
     <div class="stats">
-      <div class="stat" style="border-color:${F.u.col}"><b style="color:${F.u.col}">${pN.toFixed(1)}%</b><small>N</small></div>
-      <div class="stat" style="border-color:${F.s.col}"><b style="color:${F.s.col}">${pP.toFixed(1)}%</b><small>P</small></div>
-      <div class="stat" style="border-color:${F.k.col}"><b style="color:${F.k.col}">${pK.toFixed(1)}%</b><small>K</small></div></div>
+      <div class="stat" style="--accent:${F.u.col}"><span class="stat-letter">N</span><b>${pN.toFixed(1)}%</b><small>Nitrogen</small></div>
+      <div class="stat" style="--accent:${F.s.col}"><span class="stat-letter">P</span><b>${pP.toFixed(1)}%</b><small>Fosfor</small></div>
+      <div class="stat" style="--accent:${F.k.col}"><span class="stat-letter">K</span><b>${pK.toFixed(1)}%</b><small>Kalium</small></div></div>
     <div class="vbar"><i style="width:${pN/sum*100}%;background:${F.u.col}"></i><i style="width:${pP/sum*100}%;background:${F.s.col}"></i><i style="width:${pK/sum*100}%;background:${F.k.col}"></i></div>
     <p class="hint">Total campuran: <b>${nf.format(tot)} kg</b></p>`;
 }
